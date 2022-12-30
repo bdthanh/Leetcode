@@ -1,5 +1,4 @@
 from typing import List 
-from functools import cmp_to_key
 from operator import itemgetter
 class Solution:
   def merge(self, intervals: List[List[int]]) -> List[List[int]]:

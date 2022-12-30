@@ -7,28 +7,28 @@ class Solution:
         graph[prerequisites[i][0]].append(prerequisites[i][1])
       return graph 
     
-    def isCyclicUtil(graph: List[List[int]], visited: List[bool], isInProcessingStack: List[bool], course: int) -> bool:
+    def isCyclicUtil(graph: List[List[int]], visited: List[bool], processingStack, course: int) -> bool:
       #dfs modified just to check cyclic or not
       visited[course] = True
-      isInProcessingStack[course] = True
+      processingStack.add(course)
       
       for prereg in graph[course]:
         if visited[prereg] == False:
-          if isCyclicUtil(graph, visited, isInProcessingStack, prereg):
+          if isCyclicUtil(graph, visited, processingStack, prereg):
             return True
-        elif isInProcessingStack[prereg]:
+        elif prereg in processingStack:
           return True
         
-      isInProcessingStack[course] = False
+      processingStack.remove(course)
       return False
       
     def isCyclic(graph: List[List[int]]) -> bool:
       visited = [False] * numCourses
-      isInProcessingStack = [False] * numCourses
+      processingStack = set()
       
       for course in range(numCourses):
         if visited[course] == False:
-          if isCyclicUtil(graph, visited, isInProcessingStack, course) == True:
+          if isCyclicUtil(graph, visited, processingStack, course) == True:
             return True
       return False
     
